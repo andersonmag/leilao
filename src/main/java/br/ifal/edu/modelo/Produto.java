@@ -6,9 +6,7 @@ public class Produto {
 	private String descricao;
 	
 	public Produto(String nome) {
-		
 		this.nome = nome;
-		
 	}
 	
 	public String getNome() {
