@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.ifal.edu.modelo.Lance;
 import br.ifal.edu.modelo.Leilao;
+import br.ifal.edu.modelo.Usuario;
 
 public class Avaliador {
 
@@ -34,28 +35,29 @@ public class Avaliador {
 				return 0;
 			}
 		});
-		switch (top3MaioresLances.size()) {
-		case 0:
-			top3MaioresLances = top3MaioresLances.subList(0, 0);
+		//		switch (top3MaioresLances.size()) {
+		//		case 0:
+		//			top3MaioresLances = top3MaioresLances.subList(0, 0);
+		//
+		//			break;
+		//		case 1:
+		//			top3MaioresLances = top3MaioresLances.subList(0, 1);
+		//			
+		//			break;
+		//		case 2:
+		//			top3MaioresLances = top3MaioresLances.subList(0, 2);
+		//			
+		//			break;
+		//		default:
+		//			top3MaioresLances = top3MaioresLances.subList(0, 3);
+		//			
+		//			break;
+		//		}
 
-			break;
-		case 1:
-			top3MaioresLances = top3MaioresLances.subList(0, 1);
-			
-			break;
-		case 2:
-			top3MaioresLances = top3MaioresLances.subList(0, 2);
-			
-			break;
-		default:
-			top3MaioresLances = top3MaioresLances.subList(0, 3);
-			
-			break;
-		}
-		
-//		top3MaioresLances.subList(0, top3MaioresLances.size() > 3 ? 3 : top3MaioresLances.size());
-		
+		top3MaioresLances.subList(0, top3MaioresLances.size() > 3 ? 3 : top3MaioresLances.size());
+
 	}
+
 
 	public double getMaiorLance() {
 		return maiorDeTodos;
@@ -67,6 +69,32 @@ public class Avaliador {
 
 	public List<Lance> getTop3MaioresLances() {
 		return top3MaioresLances;
+	}
+	
+	private int qtddLancesPorUsuario(Usuario usuario, List<Lance> lances) {	
+		int qtddLances = 0;
+		for (Lance lance : lances) {
+			
+			if(lance.getUsuario().equals(usuario)) {
+				qtddLances ++;
+			}
+			
+		}		
+		return qtddLances;
+
+	}
+
+	public boolean validarLeilao(Leilao leilao) {
+
+		for(int i=0; i < leilao.getLances().size(); i++) {
+			Usuario usuario = leilao.getLances().get(i).getUsuario();
+			int qtddLances = qtddLancesPorUsuario(usuario, leilao.getLances());
+				
+				if(qtddLances > 5) {return false;}
+			
+			qtddLances = 0;
+		}
+		return true;
 	}
 
 }
